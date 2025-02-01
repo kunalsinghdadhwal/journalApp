@@ -1,4 +1,4 @@
-package net.engineeringdigest.journalApp;
+package com.kunal.journalApp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
