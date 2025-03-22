@@ -19,6 +19,7 @@ public class JournalEntryService {
 
     @Autowired
     private UserService userService;
+
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName) {
         try {
@@ -26,7 +27,7 @@ public class JournalEntryService {
             journalEntry.setDate(LocalDateTime.now());
             JournalEntry saved = journalEntryRepository.save(journalEntry);
             user.getJournalEntries().add(saved);
-            userService.saveUser(user);
+            userService.saveTheUser(user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -35,18 +36,32 @@ public class JournalEntryService {
     public void saveEntry(JournalEntry journalEntry) {
         journalEntryRepository.save(journalEntry);
     }
+
     public List<JournalEntry> getAll() {
         return journalEntryRepository.findAll();
     }
 
-    public Optional<JournalEntry> findById(ObjectId id){
-        return  journalEntryRepository.findById(id);
+    public Optional<JournalEntry> findById(ObjectId id) {
+        return journalEntryRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id, String userName){
-        User user = userService.findByUserName(userName);
-        user.getJournalEntries().removeIf(x -> x.getId().equals(id));
-        userService.saveUser(user);
-        journalEntryRepository.deleteById(id);
+    @Transactional
+    public boolean deleteById(ObjectId id, String userName) {
+        boolean removed = false;
+        try {
+            User user = userService.findByUserName(userName);
+            removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
+            if (removed) {
+                userService.saveTheUser(user);
+                journalEntryRepository.deleteById(id);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new RuntimeException("An error occured while deleting the entry.", e);
+        }
+        return removed;
+    }
+
+    public List<JournalEntry> findByUserName(String userName) {
     }
 }
