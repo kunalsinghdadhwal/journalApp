@@ -28,6 +28,7 @@ public class SpringSecurity {
         return http.authorizeHttpRequests(request -> request
                         .requestMatchers(new AntPathRequestMatcher("/journal/**")).authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/user/**")).authenticated()
+                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
                         .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
