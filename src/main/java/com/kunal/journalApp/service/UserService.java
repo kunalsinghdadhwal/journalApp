@@ -2,6 +2,7 @@ package com.kunal.journalApp.service;
 
 import com.kunal.journalApp.entity.User;
 import com.kunal.journalApp.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,11 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public boolean saveNewUser(User user) {
         try{
@@ -26,6 +29,7 @@ public class UserService {
             userRepository.save(user);
             return true;
         } catch (Exception e){
+            log.error(e.getMessage());
             return false;
         }
     }
