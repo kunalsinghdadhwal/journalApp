@@ -19,14 +19,14 @@ public class AppCache {
     @Autowired
     private ConfigJournalAppRepository configJournalAppRepository;
 
-    public Map<String, String> APP_CACHE;
+    public Map<String, String> appCache;
 
     @PostConstruct
     public void init() {
-        APP_CACHE = new HashMap<>();
+        appCache = new HashMap<>();
         List<ConfigJournalAppEntity> all = configJournalAppRepository.findAll();
-        for (ConfigJournalAppEntity app : all) {
-            APP_CACHE.put(app.getKey(), app.getValue());
+        for (ConfigJournalAppEntity configJournalAppEntity: all) {
+            appCache.put(configJournalAppEntity.getKey(), configJournalAppEntity.getValue());
         }
     }
 }

@@ -3,16 +3,19 @@ package com.kunal.journalApp.service;
 import com.kunal.journalApp.entity.JournalEntry;
 import com.kunal.journalApp.entity.User;
 import com.kunal.journalApp.repository.JournalEntryRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
+@Slf4j
 public class JournalEntryService {
     @Autowired
     private JournalEntryRepository journalEntryRepository;
@@ -29,7 +32,7 @@ public class JournalEntryService {
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error saving journal entry", e);
         }
     }
 

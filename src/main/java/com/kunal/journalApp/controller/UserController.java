@@ -5,6 +5,7 @@ import com.kunal.journalApp.entity.User;
 import com.kunal.journalApp.repository.UserRepository;
 import com.kunal.journalApp.service.UserService;
 import com.kunal.journalApp.service.WeatherService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User APIs", description = "Read, Update and Delete User")
 public class UserController {
     @Autowired
     private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private WeatherService weatherService;
 

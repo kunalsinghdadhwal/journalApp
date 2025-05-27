@@ -1,17 +1,22 @@
 package com.kunal.journalApp.api.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 public class WeatherResponse{
-    public Current current;
+    private Current current;
 
     @Getter
     @Setter
     public class Current{
-        public double temp_c;
+        private int temperature;
+        @JsonProperty("weather_descriptions")
+        private List<String> weatherDescriptions;
         public double feelslike_c;
     }
 }
